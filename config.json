@@ -1,0 +1,10 @@
+{
+    "BTC": {
+        "file": "https://query1.finance.yahoo.com/v7/finance/download/BTC-USD?period1={}&period2={}&interval=1d&events=history",
+        "x_column_name": "Date",
+        "y_column_name": "Close",
+        "frequency": "D",
+        "seasonality_mode": "additive",
+        "timespan_days": "365"
+    }
+  }
