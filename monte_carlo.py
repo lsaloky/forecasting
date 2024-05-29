@@ -20,12 +20,16 @@ ycolumn = config[prediction]['y_column_name']
 
 # Simulation - for every day, add a random daily diff from the observed values
 simulation = [[0 for i in range(SIMULATIONS_COUNT)] for j in range(int(periods))]
+maxvalue = [0 for i in range(int(periods))]
 for simulation_index in range(SIMULATIONS_COUNT):
     for day_index in range(int(periods)):
         # Use the last known observed value to start simulation. 
         previous = simulation[day_index - 1][simulation_index] if day_index > 0 else data[ycolumn].values[-1]
         index = numpy.random.randint(0, data[ycolumn].size - 1)
         simulation[day_index][simulation_index] = previous + data[ycolumn][index + 1] - data[ycolumn][index]
+
+for day_index in range(int(periods)):
+    maxvalue[day_index] = numpy.max(simulation[day_index])
 
 # For each simulation, get 25th percentile, median and 75th percentile for every day
 lower_bound = []
@@ -49,4 +53,8 @@ forecast[xcolumn] = [str(i.date()) for i in pandas.to_datetime(forecast[xcolumn]
 plt.plot(data[xcolumn], data[ycolumn], label='Observed')
 plt.plot(forecast[xcolumn], median, label='Forecast')
 plt.fill_between(forecast[xcolumn], forecast['lower'], forecast['upper'], color='gray', alpha=0.2)
+# All-time high
+plt.axhline(y=numpy.percentile(maxvalue, 25), color='gray')
+plt.axhline(y=numpy.percentile(maxvalue, 50), color='red')
+plt.axhline(y=numpy.percentile(maxvalue, 75), color='gray')
 plt.show()

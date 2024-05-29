@@ -5,7 +5,7 @@
         "y_column_name": "Close",
         "frequency": "D",
         "seasonality_mode": "additive",
-        "timespan_days": "1825"
+        "timespan_days": "3400"
     },
     "EUR-USD": {
         "file": "https://query1.finance.yahoo.com/v7/finance/download/EURUSD=X?period1={}&period2={}&interval=1d&events=history",
