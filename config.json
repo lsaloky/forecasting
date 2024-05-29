@@ -5,6 +5,6 @@
         "y_column_name": "Close",
         "frequency": "D",
         "seasonality_mode": "additive",
-        "timespan_days": "365"
+        "timespan_days": "1825"
     }
   }
