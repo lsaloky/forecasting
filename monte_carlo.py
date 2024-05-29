@@ -20,12 +20,17 @@ ycolumn = config[prediction]['y_column_name']
 
 # Simulation - for every day, add a random daily diff from the observed values
 simulation = [[0 for i in range(SIMULATIONS_COUNT)] for j in range(int(periods))]
+reached100k = [False for i in range(SIMULATIONS_COUNT)]
 for simulation_index in range(SIMULATIONS_COUNT):
     for day_index in range(int(periods)):
         # Use the last known observed value to start simulation. 
         previous = simulation[day_index - 1][simulation_index] if day_index > 0 else data[ycolumn].values[-1]
         index = numpy.random.randint(0, data[ycolumn].size - 1)
         simulation[day_index][simulation_index] = previous + data[ycolumn][index + 1] - data[ycolumn][index]
+        if (simulation[day_index][simulation_index] > 100000):
+            reached100k[simulation_index] = True
+
+print('Count of simulations to reach 100000: {}'.format(sum(reached100k)))
 
 # For each simulation, get 25th percentile, median and 75th percentile for every day
 lower_bound = []
