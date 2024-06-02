@@ -13,7 +13,7 @@
         "y_column_name": "Close",
         "frequency": "D",
         "seasonality_mode": "additive",
-        "timespan_days": "1825"
+        "timespan_days": "3000"
     },
     "USD-GBP": {
         "file": "https://query1.finance.yahoo.com/v7/finance/download/GBP%3DX?period1={}&period2={}&interval=1d&events=history",
@@ -21,7 +21,7 @@
         "y_column_name": "Close",
         "frequency": "D",
         "seasonality_mode": "additive",
-        "timespan_days": "1825"
+        "timespan_days": "3000"
     },
     "Nasdaq": {
         "file": "https://query1.finance.yahoo.com/v7/finance/download/%5EIXIC?period1={}&period2={}&interval=1d&events=history",
@@ -29,6 +29,15 @@
         "y_column_name": "Close",
         "frequency": "D",
         "seasonality_mode": "additive",
-        "timespan_days": "1825"
+        "timespan_days": "3650"
+    },
+    "USCovidWeeklyHosp": {
+        "file": "https://media.githubusercontent.com/media/reichlab/covid19-forecast-hub/master/data-truth/truth-Incident%20Hospitalizations.csv",
+        "x_column_name": "date",
+        "y_column_name": "value",
+        "frequency": "D",
+        "seasonality_mode": "multiplicative",
+        "filter_by": "location",
+        "filter_value": "US"
     }
   }
