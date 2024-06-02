@@ -30,5 +30,8 @@
         "frequency": "D",
         "seasonality_mode": "additive",
         "timespan_days": "1825"
+    },
+    "KP": {
+        "file": "https://kp.gfz-potsdam.de/app/files/Kp_ap_nowcast.txt"
     }
   }
