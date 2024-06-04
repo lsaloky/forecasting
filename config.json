@@ -23,6 +23,14 @@
         "seasonality_mode": "additive",
         "timespan_days": "3000"
     },
+    "Oil": {
+        "file": "https://query1.finance.yahoo.com/v7/finance/download/USO?period1={}&period2={}&interval=1d&events=history",
+        "x_column_name": "Date",
+        "y_column_name": "Close",
+        "frequency": "D",
+        "seasonality_mode": "multiplicative",
+        "timespan_days": "3000"
+    },
     "Nasdaq": {
         "file": "https://query1.finance.yahoo.com/v7/finance/download/%5EIXIC?period1={}&period2={}&interval=1d&events=history",
         "x_column_name": "Date",
