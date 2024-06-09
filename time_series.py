@@ -26,6 +26,7 @@ data.rename(columns={config[prediction]['x_column_name']: 'ds', config[predictio
 data['ds'] = pandas.to_datetime(data['ds'])
 
 # Create and fit the model, with uncertainty interval 25% to 75%
+# important params to consider: growth='flat', changepoint_range=1
 model = prophet.Prophet(interval_width = 0.5, seasonality_mode=config[prediction]['seasonality_mode'])
 model.fit(data)
 
