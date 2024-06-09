@@ -47,5 +47,40 @@
         "seasonality_mode": "multiplicative",
         "filter_by": "location",
         "filter_value": "US"
+    },
+    "Encounters": {
+        "file": "data/encounters.csv",
+        "x_column_name": "Date",
+        "y_column_name": "Encounters",
+        "frequency": "M",
+        "seasonality_mode": "multiplicative"
+    },
+    "TradeOpennessChina": {
+        "file": "data/trade_openness_china.csv",
+        "x_column_name": "Year",
+        "y_column_name": "TradeOpenness",
+        "frequency": "YE",
+        "seasonality_mode": "additive"
+    },
+    "TradeOpennessIndia": {
+        "file": "data/trade_openness_india.csv",
+        "x_column_name": "Year",
+        "y_column_name": "TradeOpenness",
+        "frequency": "YE",
+        "seasonality_mode": "additive"
+    },
+    "TradeOpennessUS": {
+        "file": "data/trade_openness_us.csv",
+        "x_column_name": "Year",
+        "y_column_name": "TradeOpenness",
+        "frequency": "YE",
+        "seasonality_mode": "additive"
+    },
+    "TradeOpennessGlobal": {
+        "file": "data/trade_openness_global.csv",
+        "x_column_name": "Year",
+        "y_column_name": "TradeOpenness",
+        "frequency": "YE",
+        "seasonality_mode": "additive"
     }
   }
