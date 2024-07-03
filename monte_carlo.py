@@ -27,6 +27,8 @@ for simulation_index in range(SIMULATIONS_COUNT):
         previous = simulation[day_index - 1][simulation_index] if day_index > 0 else data[ycolumn].values[-1]
         index = numpy.random.randint(0, data[ycolumn].size - 1)
         simulation[day_index][simulation_index] = previous + data[ycolumn][index + 1] - data[ycolumn][index]
+        # Change to < 42280 to forecast https://www.metaculus.com/questions/25599/conditional-bitcoin-up-over-2024/ 
+        # With > 100000, forecast on https://www.metaculus.com/questions/3820/bitcoin-extremes-will-1-bitcoin-be-worth-100000-or-more-before-2025/
         if (simulation[day_index][simulation_index] > 100000):
             reached100k[simulation_index] = True
 
