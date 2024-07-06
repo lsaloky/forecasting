@@ -55,6 +55,13 @@
         "frequency": "M",
         "seasonality_mode": "multiplicative"
     },
+    "RCP": {
+        "file": "data/rcp.csv",
+        "x_column_name": "Date",
+        "y_column_name": "BidenPollingMargin",
+        "frequency": "M",
+        "seasonality_mode": "multiplicative"
+    },
     "TradeOpennessChina": {
         "file": "data/trade_openness_china.csv",
         "x_column_name": "Year",
