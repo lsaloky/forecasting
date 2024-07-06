@@ -11,9 +11,18 @@ config = json.load(open('config.json', 'r'))
 prediction = input(f'Choose prediction ({', '.join(config.keys())}): ')
 periods = input('Periods to predict: ')
 
-# Load data from CSV
-filename = config[prediction]['file'].format(int(time.time()) - int(config[prediction].get('timespan_days', 0)) * 24 * 3600, int(time.time()))
-data = pandas.read_csv(filename)
+# Load data from CSV, allowing to specify timespan in URL, if configured (timespan_days)
+if 'timespan_days' in config[prediction].keys():
+    filename = config[prediction]['file'].format(int(time.time()) - int(config[prediction].get('timespan_days', 0)) * 24 * 3600, int(time.time()))
+else:
+    filename = config[prediction]['file']
+    
+# Filter the data, if configured (filter_by and filter_value)
+if 'filter_by' in config[prediction].keys() and 'filter_value' in config[prediction].keys():
+    unfiltered_data = pandas.read_csv(filename)
+    data = unfiltered_data[unfiltered_data[config[prediction]['filter_by']] == config[prediction]['filter_value']]
+else:
+    data = pandas.read_csv(filename)
 
 xcolumn = config[prediction]['x_column_name']
 ycolumn = config[prediction]['y_column_name']
@@ -26,13 +35,13 @@ for simulation_index in range(SIMULATIONS_COUNT):
         # Use the last known observed value to start simulation. 
         previous = simulation[day_index - 1][simulation_index] if day_index > 0 else data[ycolumn].values[-1]
         index = numpy.random.randint(0, data[ycolumn].size - 1)
-        simulation[day_index][simulation_index] = previous + data[ycolumn][index + 1] - data[ycolumn][index]
+        simulation[day_index][simulation_index] = previous + data[ycolumn].values[index + 1] - data[ycolumn].values[index]
         # Change to < 42280 and day_index == int(periods) - 1 to forecast https://www.metaculus.com/questions/25599/conditional-bitcoin-up-over-2024/ 
         # With > 100000, forecast on https://www.metaculus.com/questions/3820/bitcoin-extremes-will-1-bitcoin-be-worth-100000-or-more-before-2025/
         if (simulation[day_index][simulation_index] > 100000):
             reached100k[simulation_index] = True
 
-print('Count of simulations to reach 100000: {}'.format(sum(reached100k)))
+print('Count of simulations to match the condition: {}'.format(sum(reached100k)))
 
 # For each simulation, get 25th percentile, median and 75th percentile for every day
 lower_bound = []
