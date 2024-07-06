@@ -55,12 +55,19 @@
         "frequency": "M",
         "seasonality_mode": "multiplicative"
     },
-    "RCP": {
+    "Admissions": {
+        "file": "data/admissions.csv",
+        "x_column_name": "Date",
+        "y_column_name": "Admissions",
+        "frequency": "M",
+        "seasonality_mode": "multiplicative"
+    },
+   "RCP": {
         "file": "data/rcp.csv",
         "x_column_name": "Date",
         "y_column_name": "BidenPollingMargin",
         "frequency": "M",
-        "seasonality_mode": "multiplicative"
+        "seasonality_mode": "additive"
     },
     "TradeOpennessChina": {
         "file": "data/trade_openness_china.csv",
