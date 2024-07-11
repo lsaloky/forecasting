@@ -69,6 +69,13 @@
         "frequency": "M",
         "seasonality_mode": "additive"
     },
+    "GlobalTemperature": {
+        "file": "data/global_temperature.csv",
+        "x_column_name": "Year",
+        "y_column_name": "No_Smoothing",
+        "frequency": "Y",
+        "seasonality_mode": "additive"
+    },
     "TradeOpennessChina": {
         "file": "data/trade_openness_china.csv",
         "x_column_name": "Year",
