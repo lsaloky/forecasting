@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 SIMULATIONS_COUNT = 1000
 
 config = json.load(open('config.json', 'r'))
-prediction = input(f'Choose prediction ({', '.join(config.keys())}): ')
+prediction = 'BTC-USD'
 periods = input('Periods to predict: ')
 
 # Load data from CSV, allowing to specify timespan in URL, if configured (timespan_days)
