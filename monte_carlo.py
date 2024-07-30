@@ -24,6 +24,12 @@ if 'filter_by' in config[prediction].keys() and 'filter_value' in config[predict
 else:
     data = pandas.read_csv(filename)
 
+# Sometimes there are NaN values in historical values, replace with averages of neighbooring values
+for i in range(1, len(data) - 1):
+    for j in data.columns:
+        if pandas.isna(data.at[i, j]):
+            data.at[i, j] = (data.at[i - 1, j] + data.at[i + 1, j]) / 2
+
 xcolumn = config[prediction]['x_column_name']
 ycolumn = config[prediction]['y_column_name']
 
@@ -38,6 +44,7 @@ for simulation_index in range(SIMULATIONS_COUNT):
         simulation[day_index][simulation_index] = previous + data[ycolumn].values[index + 1] - data[ycolumn].values[index]
         # Change to < 42280 and day_index == int(periods) - 1 to forecast https://www.metaculus.com/questions/25599/conditional-bitcoin-up-over-2024/ 
         # With > 100000, forecast on https://www.metaculus.com/questions/3820/bitcoin-extremes-will-1-bitcoin-be-worth-100000-or-more-before-2025/
+        # Change to > 73750 + adjust periods to forecast https://www.metaculus.com/questions/26530/bitcoin-new-ath-before-october/ 
         if (simulation[day_index][simulation_index] > 100000):
             reached100k[simulation_index] = True
 
