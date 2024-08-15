@@ -1,6 +1,7 @@
 import json
 import numpy
 import pandas
+from datetime import date
 import time
 
 import matplotlib.pyplot as plt
@@ -8,8 +9,9 @@ import matplotlib.pyplot as plt
 SIMULATIONS_COUNT = 1000
 
 config = json.load(open('config.json', 'r'))
-prediction = input(f'Choose prediction ({', '.join(config.keys())}): ')
-periods = input('Periods to predict: ')
+prediction = 'EUR-USD'
+# Update periods for criteria #2 to (date(2026, 1, 1) - date.today()).days
+periods = (date(2024, 10, 1) - date.today()).days
 
 # Load data from CSV, allowing to specify timespan in URL, if configured (timespan_days)
 if 'timespan_days' in config[prediction].keys():
@@ -27,6 +29,9 @@ else:
 xcolumn = config[prediction]['x_column_name']
 ycolumn = config[prediction]['y_column_name']
 
+criteria_met_1 = [False for i in range(SIMULATIONS_COUNT)]
+criteria_met_2 = [False for i in range(SIMULATIONS_COUNT)]
+
 # Simulation - for every day, add a random daily diff from the observed values
 simulation = [[0 for i in range(SIMULATIONS_COUNT)] for j in range(int(periods))]
 for simulation_index in range(SIMULATIONS_COUNT):
@@ -35,6 +40,15 @@ for simulation_index in range(SIMULATIONS_COUNT):
         previous = simulation[day_index - 1][simulation_index] if day_index > 0 else data[ycolumn].values[-1]
         index = numpy.random.randint(0, data[ycolumn].size - 1)
         simulation[day_index][simulation_index] = previous + data[ycolumn].values[index + 1] - data[ycolumn].values[index]
+        # https://www.metaculus.com/questions/26651/usd-to-eur-value-before-oct-1/
+        if (simulation[day_index][simulation_index] < 1/0.935):
+            criteria_met_1[simulation_index] = True
+        # https://www.metaculus.com/questions/21167/1-eur-costs-less-than-1-usd-before-2026/
+        if (simulation[day_index][simulation_index] < 1):
+            criteria_met_2[simulation_index] = True
+
+print('Criteria #1 met in ' + str(criteria_met_1.count(True)) +' simulations')
+print('Criteria #2 met in ' + str(criteria_met_2.count(True)) +' simulations')
 
 # For each simulation, get 25th percentile, median and 75th percentile for every day
 lower_bound = []
